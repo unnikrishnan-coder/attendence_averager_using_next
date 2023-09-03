@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@900&family=Roboto+Condensed&display=swap");
+
+:root {
+  --black-bg: #0f0f0f;
+  --blue-text: #45a0f5;
+  --green-text: #26e3c2;
+  --white-text: #fcfcfc;
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  font-family: "Kumbh Sans", sans-serif;
+  font-family: "Roboto Condensed", sans-serif;
+}
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(7.5px);
+  -webkit-backdrop-filter: blur(7.5px);
+}
+.glassmorphism-no-shadow{
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(7.5px);
+    -webkit-backdrop-filter: blur(7.5px);
+}
+.glass-div{
+    background: rgba(9, 80, 221, 0.216);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255,255,255,0.2);
+    border-left: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 5px 5px 30px rgba(0,0,0,0.2);
+}
+.glass-div-front{
+    background: rgba(255, 255, 255, 0.199);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255,255,255,0.2);
+    border-left: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 5px 5px 30px rgba(0,0,0,0.2);
+}
+.glass-div-popup{
+  background: rgba(255, 255, 255, 0.408);
+  backdrop-filter: blur(5px);
+  border-top: 1px solid rgba(255,255,255,0.2);
+  border-left: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 5px 5px 30px rgba(0,0,0,0.2);
+}
+.glass-h1{
+    line-height: 55px;
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-align: center;
+  background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255,255,255,0.2);
+    border-left: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 5px 5px 30px rgba(0,0,0,0.2);
+    margin-top: 0px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+.height-screen-2rem{
+    height: auto;
+    min-height: calc(100vh - 2rem);
+}
+.height-full-2rem{
+  height: calc(100% - 2rem);
+}
+.min-height-screen-2rem{
+  min-height: calc(100vh - 2rem);
+}
+.max-height-screen-2rem{
+  max-height: calc(100vh - 2rem);
+}
+.dashboard-bg{
+    background-image: url("/bg.jpg");
+    background-position: center;
+    background-size: cover;
+}
+.glass-input{
+  outline: none;
+  border: none;
+  background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255,255,255,0.2);
+    border-left: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 5px 5px 30px rgba(0,0,0,0.2);
+  color: rgb(255, 255, 255);
+  transition: color 0.3s ease-out;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 10px 15px 10px 15px;
+}
+.glass-input::placeholder{
+  color: #fff;
+}
+.home-input{
+  all: unset;
+  border: 2px solid rgb(111, 0, 255);
+  padding: 12px;
+  border-radius: 10px;
+  color: #0f0f0f;
+  margin: 10px 0;
+}
+.home-input::placeholder{
+  color: #0f0f0f;
+}
