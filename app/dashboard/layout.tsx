@@ -8,13 +8,6 @@ import { auth } from '@/firebase';
 
 const DashBoard = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
-  onAuthStateChanged(auth,(user)=>{
-    if(user){
-      console.log("logged in");
-    }else{
-      console.log("logged out");
-    }
-  })
   function handleLogout(): void {
     signOut(auth).then(()=>{
       if(hasCookie("user_id")){
