@@ -2,12 +2,15 @@
 import Navbar from '@/components/Navbar/Navbar'
 import {  FormEvent, useState } from 'react'
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { app } from '../../firebase';
+import { auth } from '@/firebase';
 import { useRouter } from 'next/navigation';
 import { setCookie } from 'cookies-next';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const [data,setData] = useState({email:"",password:""});
+  const [loading,setLoading] = useState(false);
   const router = useRouter();
 
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
@@ -19,16 +22,19 @@ const Login = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>)=>{
     e.preventDefault();
+    setLoading(true);
     const email = data.email;
     const password = data.password;
-  
-    const auth = getAuth(app);
     signInWithEmailAndPassword(auth,email,password).then((res)=>{
       setCookie("user_token","user_logged_in",{maxAge:60*60*24*4});
       setCookie("user_id",res.user.uid,{maxAge:60*60*24*4});
       router.push("/dashboard")
     }).catch((err)=>{
-      console.log(err);
+      toast(err.message,{
+        position:'top-right',
+        type:"error"
+      })
+      setLoading(false);
     })
   }
 
@@ -42,9 +48,10 @@ const Login = () => {
         <input autoComplete='username' className='home-input' value={data.email} type="email" name='email' id='email' placeholder='Enter your email' required onChange={(e)=>handleChange(e)}/>
         <label htmlFor="password">Password</label>
         <input autoComplete="current-password" type="password" value={data.password} className='home-input' name='password' id='password' placeholder='Enter your password' required onChange={(e)=>handleChange(e)}/>
-        <button type='submit' className='p-3 bg-[--black-bg] rounded text-[--white-text] mt-3'>Submit</button>
+        <button type='submit' className='p-3 bg-[--black-bg] rounded text-[--white-text] mt-3'>{loading?"Submitting...":"Submit"}</button>
       </form>
     </div>
+    <ToastContainer />
     </>
   )
 }

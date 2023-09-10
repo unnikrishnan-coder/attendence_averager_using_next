@@ -1,18 +1,30 @@
 "use client"
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React from 'react'
 import {hasCookie,deleteCookie} from "cookies-next";
 import StickySidebar from '@/components/StickySidebar/StickySidebar';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { auth } from '@/firebase';
 
 const DashBoard = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
-  function handleLogout(): void {
-    if(hasCookie("user_id")){
-      deleteCookie("user_id");
-      deleteCookie("user_token");
+  onAuthStateChanged(auth,(user)=>{
+    if(user){
+      console.log("logged in");
+    }else{
+      console.log("logged out");
     }
-    router.push("/login");
+  })
+  function handleLogout(): void {
+    signOut(auth).then(()=>{
+      if(hasCookie("user_id")){
+        deleteCookie("user_id");
+        deleteCookie("user_token");
+      }
+      router.push("/login")
+    }).catch((err)=>{
+      console.log(err.message);
+    })
   }
 
   return (
