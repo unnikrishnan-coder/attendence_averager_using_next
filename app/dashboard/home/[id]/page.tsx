@@ -35,7 +35,16 @@ const UpdateAttendence = ({ params: { id } }: { params: { id: string } }) => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [id]);
+
+  if(!subject){
+    return (
+      <div className="glass-div mt-4 mb-4 max-sm:mr-0 mr-4 ml-0 height-full-2rem max-sm:h-[calc(100vh-3rem)]">
+        <h1 className="text-red-600">There was an error while fetching the data!</h1>
+      </div>
+    )
+  }
+
   return (
     <div className="glass-div mt-4 mb-4 max-sm:mr-0 mr-4 ml-0 height-full-2rem max-sm:h-[calc(100vh-3rem)]">
       <button
