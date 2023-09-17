@@ -8,10 +8,10 @@ export default function Error({error,reset,}: {error: Error ,reset: () => void})
   }, [error])
 
   return (
-    <div>
+    <div className='bg-black text-white w-full h-screen'>
       <h2>Something went wrong!</h2>
       <h2>{error.message}</h2>
-      <button onClick={() => reset()}>Try again</button>
+      <button onClick={() => reset()} className='p-3 bg-blue-600 text-white rounded'>Try again</button>
     </div>
   )
 }

@@ -27,7 +27,7 @@ const StickySidebar = () => {
                 </button>
                 {
                     menu && (
-                        <ul className='transition-all duration-1000 ease-in-out flex relative -top-8 items-center flex-col glass-div w-[60vw] z-30 justify-between min-h-screen'>
+                        <ul className='transition-all duration-1000 ease-in-out flex relative -top-8 items-center flex-col glass-div w-[60vw] z-30 justify-between min-h-screen max-h-screen'>
                             <Link href="/dashboard" onClick={()=>setMenu((val)=>!val)} className='mt-14 cursor-pointer rounded w-[80%] text-center glass-div-front p-3'>
                                 <li >
                                     Home
