@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getFirestore, doc, getDoc, DocumentData } from "firebase/firestore";
 import { app } from "@/firebase";
 import { Subject } from "@/types";
@@ -13,6 +13,7 @@ const UpdateAttendence = ({ params: { id } }: { params: { id: string } }) => {
   const [subject, setSubject] = useState<Subject | DocumentData>({});
   const [openPopUp, setOpenPopUp] = useState(false);
   const [openDeletePopUp, setOpenDeletePopUp] = useState(false);
+  const [average,setAverage] = useState<string | undefined>();
 
   const handleAttend = () => {
     setSubject((sub) => ({ ...sub, attended: Number(sub.attended) + 1 }));
@@ -40,6 +41,13 @@ const UpdateAttendence = ({ params: { id } }: { params: { id: string } }) => {
         console.log(err);
       });
   }, [id]);
+
+  useEffect(()=>{
+    let val = Number(subject.attended) / Number(subject.total);
+    val = val * 100;
+    let stVal = val.toFixed(2);
+    setAverage(`${stVal}%`);
+  },[subject])
 
   if(!subject.name){
     return (
@@ -90,7 +98,7 @@ const UpdateAttendence = ({ params: { id } }: { params: { id: string } }) => {
             </h1>
             <h1 className="text-white m-3">Total Hours: {subject.total}</h1>
             <h1 className="text-white m-3">
-              Average Attendence: {(subject.attended / subject.total) * 100}%
+              Average Attendence: {average?average :null}
             </h1>
           </div>
           <button
