@@ -1,3 +1,4 @@
+"use client"
 import { deleteCookie, hasCookie } from 'cookies-next';
 import Image from 'next/image';
 import Link from 'next/link'
