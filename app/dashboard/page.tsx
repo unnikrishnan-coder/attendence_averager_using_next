@@ -6,6 +6,7 @@ import {app} from '@/firebase';
 import { Subject } from '@/types';
 import AddSubject from '@/components/AddSubject/AddSubject';
 import {getCookie,hasCookie} from 'cookies-next';
+import {ToastContainer} from 'react-toastify';
 
 const db = getFirestore(app);
 
@@ -57,6 +58,7 @@ const Dashboard = () => {
         }
       </div>
       </div>
+    <ToastContainer />
     </>
   )
 }

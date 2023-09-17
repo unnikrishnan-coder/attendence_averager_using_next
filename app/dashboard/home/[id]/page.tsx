@@ -3,9 +3,10 @@ import React, { useEffect, useState } from "react";
 import { getFirestore, doc, getDoc, DocumentData } from "firebase/firestore";
 import { app } from "@/firebase";
 import { Subject } from "@/types";
-import AddSubject from "@/components/AddSubject/AddSubject";
 import Image from "next/image";
 import DeletePopUp from "@/components/DeletePopUp";
+import EditCoursePopUp from "@/components/PopUps/EditCoursePopUp";
+import { toast } from "react-toastify";
 
 const UpdateAttendence = ({ params: { id } }: { params: { id: string } }) => {
   const db = getFirestore(app);
@@ -29,7 +30,10 @@ const UpdateAttendence = ({ params: { id } }: { params: { id: string } }) => {
         if (val.exists()) {
           setSubject(val.data());
         } else {
-          console.log("No such document!");
+          toast("No such document exists!",{
+            type:"error",
+            position:"top-right"
+          })
         }
       })
       .catch((err) => {
@@ -37,10 +41,10 @@ const UpdateAttendence = ({ params: { id } }: { params: { id: string } }) => {
       });
   }, [id]);
 
-  if(!subject){
+  if(!subject.name){
     return (
       <div className="glass-div mt-4 mb-4 max-sm:mr-0 mr-4 ml-0 height-full-2rem max-sm:h-[calc(100vh-3rem)]">
-        <h1 className="text-red-600">There was an error while fetching the data!</h1>
+        <h1 className="text-red-600 text-center">There was an error while fetching the data!</h1>
       </div>
     )
   }
@@ -59,32 +63,18 @@ const UpdateAttendence = ({ params: { id } }: { params: { id: string } }) => {
       >
         <Image src="/delete.png" alt="edit" height="25" width="25" />
       </button>
+
       {
-        openDeletePopUp ? (
+      openDeletePopUp ? (
           <DeletePopUp id={id} db={db} setPopup={setOpenDeletePopUp}/>
         ) : null
       }
-      {openPopUp ? (
-        <div className="absolute z-40 top-0 left-0 right-0 bottom-0 bg-blue-500">
-          <button
-            className="rounded cursor-pointer z-10 glass-div-front text-white absolute p-3 top-10 right-5"
-            onClick={() => {setOpenPopUp((val) => !val)}}
-          >
-            X
-          </button>
-          <div className="absolute glass-div z-40 top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2">
-            <AddSubject
-              title="Edit Course"
-              db={db}
-              nameVal={subject.name}
-              attendedVal={subject.attended}
-              totalVal={subject.total}
-              update={true}
-              id={id}
-            />
-          </div>
-        </div>
-      ) : null}
+
+      {
+      openPopUp ? 
+      <EditCoursePopUp db={db} name={subject.name} attended={subject.attended} total={subject.total} id={id} setOpenPopUp={setOpenPopUp}/> : null
+      }
+
       <div className="glass-div-front h-[50%] max-sm:h-full">
         <h1 className="glass-h1">{subject.name}</h1>
         <div className="flex items-center justify-evenly w-full h-full max-sm:relative">

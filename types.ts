@@ -1,5 +1,5 @@
 export type Subject = {
-    id:string
+    id?:string
     name: string
     total: number
     attended : number
