@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { doc, setDoc, updateDoc,addDoc,collection} from "firebase/firestore";
+import { doc, updateDoc,addDoc,collection} from "firebase/firestore";
 import { hasCookie, getCookie } from "cookies-next";
 import { Subject } from "@/types";
 import {toast,ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { db } from "@/firebase";
 
-const AddSubject = ({ title, db, nameVal, attendedVal, totalVal, update, id ,setSubjects}: { title: string, db?: any, nameVal: string, attendedVal: string, totalVal: string, update?: boolean, id: string ,setSubjects?:Function}) => {
+const AddSubject = ({ title, nameVal, attendedVal, totalVal, update, id ,setSubjects}: { title: string, nameVal: string, attendedVal: string, totalVal: string, update?: boolean, id: string ,setSubjects?:Function}) => {
 
   const [name, setName] = useState(nameVal);
   const [attended, setAttended] = useState(attendedVal);

@@ -1,8 +1,9 @@
 import { deleteDoc, doc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { db } from "@/firebase";
 
-const DeletePopUp = ({id,db,setPopup}:{id:string,db?:any,setPopup:Function}) => {
+const DeletePopUp = ({id,setPopup}:{id:string,setPopup:Function}) => {
     const {push} = useRouter();
     const [loading,setLoading] = useState(false);
     function deleteCourse(): void {

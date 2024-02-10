@@ -1,26 +1,27 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getFirestore, doc, getDoc, DocumentData } from "firebase/firestore";
-import { app } from "@/firebase";
+import { doc, getDoc, DocumentData } from "firebase/firestore";
 import { Subject } from "@/types";
 import Image from "next/image";
 import DeletePopUp from "@/components/DeletePopUp";
 import EditCoursePopUp from "@/components/PopUps/EditCoursePopUp";
 import { toast } from "react-toastify";
+import { db } from "@/firebase";
 
 const UpdateAttendence = ({ params: { id } }: { params: { id: string } }) => {
-  const db = getFirestore(app);
-  const [subject, setSubject] = useState<Subject | DocumentData>({});
+  const [subject, setSubject] = useState<Subject | DocumentData>({id:id,attended:1,name:"Error",total:1,uid:""});
   const [openPopUp, setOpenPopUp] = useState(false);
   const [openDeletePopUp, setOpenDeletePopUp] = useState(false);
   const [average,setAverage] = useState<string | undefined>();
 
   const handleAttend = () => {
+    if(!subject.attended && !subject.total) return;
     setSubject((sub) => ({ ...sub, attended: Number(sub.attended) + 1 }));
     setSubject((sub) => ({ ...sub, total: Number(sub.total) + 1 }));
   };
 
   const handleAbsent = () => {
+    if(!subject.attended && !subject.total) return;
     setSubject((sub) => ({ ...sub, total: Number(sub.total) + 1 }));
   };
 
@@ -40,7 +41,7 @@ const UpdateAttendence = ({ params: { id } }: { params: { id: string } }) => {
       .catch((err) => {
         console.log(err);
       });
-  }, [id]);
+  }, []);
 
   useEffect(()=>{
     let val = Number(subject.attended) / Number(subject.total);
@@ -72,19 +73,12 @@ const UpdateAttendence = ({ params: { id } }: { params: { id: string } }) => {
         <Image src="/delete.png" alt="edit" height="25" width="25" />
       </button>
 
-      {
-      openDeletePopUp ? (
-          <DeletePopUp id={id} db={db} setPopup={setOpenDeletePopUp}/>
-        ) : null
-      }
+      {openDeletePopUp && <DeletePopUp id={id} setPopup={setOpenDeletePopUp}/>}
 
-      {
-      openPopUp ? 
-      <EditCoursePopUp db={db} name={subject.name} attended={subject.attended} total={subject.total} id={id} setOpenPopUp={setOpenPopUp}/> : null
-      }
+      {openPopUp && <EditCoursePopUp name={subject.name} attended={subject.attended} total={subject.total} id={id} setOpenPopUp={setOpenPopUp}/> }
 
       <div className="glass-div-front h-[50%] max-sm:h-full">
-        <h1 className="glass-h1">{subject.name}</h1>
+        <h1 className="glass-h1">{subject.name?String(subject.name).toUpperCase():"Error"}</h1>
         <div className="flex items-center justify-evenly w-full h-full max-sm:relative">
           <button
             className="rounded cursor-pointer text-white glass-div-front p-3  max-sm:absolute max-sm:left-5 max-sm:z-40 max-sm:top-[65%]"
@@ -94,9 +88,9 @@ const UpdateAttendence = ({ params: { id } }: { params: { id: string } }) => {
           </button>
           <div className="glass-div-front text-center p-3 max-sm:grow max-sm:m-4">
             <h1 className="text-white m-3">
-              Attended Hours: {subject.attended}
+              Attended Hours: {subject.attended?subject.attended:null}
             </h1>
-            <h1 className="text-white m-3">Total Hours: {subject.total}</h1>
+            <h1 className="text-white m-3">Total Hours: {subject.total?subject.total:null}</h1>
             <h1 className="text-white m-3">
               Average Attendence: {average?average :null}
             </h1>

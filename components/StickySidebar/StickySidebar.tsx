@@ -28,21 +28,26 @@ const StickySidebar = () => {
                 {
                     menu && (
                         <ul className='transition-all duration-1000 ease-in-out flex relative -top-8 items-center flex-col glass-div w-[60vw] z-30 justify-between min-h-screen max-h-screen'>
-                            <Link href="/dashboard" onClick={()=>setMenu((val)=>!val)} className='mt-14 cursor-pointer rounded w-[80%] text-center glass-div-front p-3'>
-                                <li >
+                            <li className='mt-14 cursor-pointer rounded w-[80%] text-center glass-div-front p-3'>
+                                <Link href="/dashboard" onClick={() => setMenu((val) => !val)} >
                                     Home
-                                </li>
-                            </Link>
-                            <div className='flex items-center flex-col w-full'>
-                                {/* <Link href="/settings" onClick={()=>setMenu((val)=>!val)} className='mb-4 rounded w-[80%] text-center glass-div-front p-3'>
+                                </Link>
+                            </li>
+                            <li className='mt-4 cursor-pointer rounded w-[80%] text-center glass-div-front p-3'>
+                                <Link href="/dashboard/sgpa" >
+                                    Calculate SGPA average
+                                </Link>
+                            </li>
+                            <li className='flex items-center flex-col w-full'>
+                                    {/* <Link href="/settings" onClick={()=>setMenu((val)=>!val)} className='mb-4 rounded w-[80%] text-center glass-div-front p-3'>
                                     <li className='text-black'>
-                                        Settings
+                                    Settings
                                     </li>
                                 </Link> */}
-                                <li className='text-black mb-4 rounded glass-div-front w-[80%] text-center p-3'>
-                                    <button type='button' onClick={() => handleLogout()}>Logout</button>
-                                </li>
-                            </div>
+                                    <div className='text-black mb-4 rounded glass-div-front w-[80%] text-center p-3'>
+                                        <button type='button' onClick={() => handleLogout()}>Logout</button>
+                                    </div>
+                            </li>
                         </ul>
                     )
                 }
