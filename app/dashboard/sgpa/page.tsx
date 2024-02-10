@@ -37,18 +37,28 @@ const Sgpa = () => {
     
   }
 
+  const resetSgpas = ()=>{
+    setSgpas({sem1:"",
+    sem2:"",
+    sem3:"",
+    sem4:"",
+    sem5:"",
+    sem6:"",
+    sem7:"",
+    sem8:""})
+  }
   useEffect(()=>{
     calcAverage();
   },[sgpas])
 
   return (
     <div className="glass-div-front h-[50%] max-sm:h-full mt-4 mr-4 p-10">
+      <div className="flex justify-between">
       <h1 className="text-4xl font-bold">Average SGPA: {average}</h1>
-      {/* <div className="flex flex-col">
-      <label htmlFor="semcount">Count of Completed Semesters</label>
-      <input type="number" className='glass-input' name="semcount" id="semcount" defaultValue={0}
-      onChange={()=>{calcAverage()}} max={10}/>
-      </div> */}
+      <div className="flex flex-col">
+      <button type="button" className='glass-input' onClick={()=>{resetSgpas()}}>Clear All Marks </button>
+      </div>
+      </div>
       <div id="semesters" className="flex w-full flex-wrap">
       <input type="number" className='glass-input mr-5 mt-5' name="sem1" value={sgpas.sem1} placeholder="S1" onChange={(e)=>handleChange(e)} max={10}/>
       <input type="number" className='glass-input mr-5 mt-5' name="sem2" value={sgpas.sem2} placeholder="S2" onChange={(e)=>handleChange(e)} max={10}/>
