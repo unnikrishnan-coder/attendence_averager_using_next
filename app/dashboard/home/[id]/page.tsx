@@ -7,6 +7,7 @@ import DeletePopUp from "@/components/DeletePopUp";
 import EditCoursePopUp from "@/components/PopUps/EditCoursePopUp";
 import { toast } from "react-toastify";
 import { db } from "@/firebase";
+import AttendenceDisplay from "@/components/AttendenceDisplay/AttendenceDisplay";
 
 const UpdateAttendence = ({ params: { id } }: { params: { id: string } }) => {
   const [subject, setSubject] = useState<Subject | DocumentData>({id:id,attended:1,name:"Error",total:1,uid:""});
@@ -23,23 +24,23 @@ const UpdateAttendence = ({ params: { id } }: { params: { id: string } }) => {
     setSubject((sub) => ({ ...sub, total: sub.total + 1 }));
   };
 
-  useEffect(() => {
-    const docRef = doc(db, "subjects", id);
-    getDoc(docRef)
-      .then((val) => {
-        if (val.exists()) {
-          setSubject(val.data());
-        } else {
-          toast("No such document exists!",{
-            type:"error",
-            position:"top-right"
-          })
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [id]);
+  // useEffect(() => {
+  //   const docRef = doc(db, "subjects", id);
+  //   getDoc(docRef)
+  //     .then((val) => {
+  //       if (val.exists()) {
+  //         setSubject(val.data());
+  //       } else {
+  //         toast("No such document exists!",{
+  //           type:"error",
+  //           position:"top-right"
+  //         })
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, [id]);
 
   useEffect(()=>{
     let val = subject.attended / subject.total;
@@ -84,15 +85,7 @@ const UpdateAttendence = ({ params: { id } }: { params: { id: string } }) => {
           >
             <span className="max-sm:hidden">Was Absent In a Class</span><Image src={"/minus.png"} height={25} width={25} alt="Add" className="sm:hidden"/>
           </button>
-          <div className="glass-div-front text-center p-3 max-sm:grow max-sm:m-4">
-            <h1 className="text-white m-3">
-              Attended Hours: {subject.attended?subject.attended:null}
-            </h1>
-            <h1 className="text-white m-3">Total Hours: {subject.total?subject.total:null}</h1>
-            <h1 className="text-white m-3">
-              Average Attendence: {average?average :null}
-            </h1>
-          </div>
+          <AttendenceDisplay attended={subject.attended} total={subject.total} average={average}/>
           <button
             className="rounded cursor-pointer text-white glass-div-front p-3 max-sm:ml-1 max-sm:absolute max-sm:right-5 max-sm:z-40 max-sm:top-[65%]"
             onClick={() => handleAttend()}
