@@ -24,23 +24,23 @@ const UpdateAttendence = ({ params: { id } }: { params: { id: string } }) => {
     setSubject((sub) => ({ ...sub, total: sub.total + 1 }));
   };
 
-  // useEffect(() => {
-  //   const docRef = doc(db, "subjects", id);
-  //   getDoc(docRef)
-  //     .then((val) => {
-  //       if (val.exists()) {
-  //         setSubject(val.data());
-  //       } else {
-  //         toast("No such document exists!",{
-  //           type:"error",
-  //           position:"top-right"
-  //         })
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, [id]);
+  useEffect(() => {
+    const docRef = doc(db, "subjects", id);
+    getDoc(docRef)
+      .then((val) => {
+        if (val.exists()) {
+          setSubject(val.data());
+        } else {
+          toast("No such document exists!",{
+            type:"error",
+            position:"top-right"
+          })
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [id]);
 
   useEffect(()=>{
     let val = subject.attended / subject.total;
