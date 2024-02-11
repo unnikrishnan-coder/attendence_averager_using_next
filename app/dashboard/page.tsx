@@ -37,7 +37,7 @@ const Dashboard = () => {
   }
   return (
     <>
-      <AddSubject title="Add New Course" nameVal="" attendedVal="" totalVal="" id="" setSubjects={setSubjects}/>
+      <AddSubject title="Add New Course" nameVal="" attendedVal={0} totalVal={0} id="" setSubjects={setSubjects}/>
       <div className='mt-4 mb-4 mr-4 ml-0 glass-div-front max-sm:w-full'>
       <h1 className='glass-h1 p-2'>All Courses</h1>
       <div className='flex max-sm:flex-col flex-wrap mt-4  justify-evenly items-center '>
