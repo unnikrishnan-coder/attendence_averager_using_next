@@ -1,9 +1,9 @@
-import AddSubject from "../AddSubject/AddSubject"
-import { db } from "@/firebase";
+import AddSubject from "../AddSubject/AddSubject";
+
 interface Props {
     name : string;
-    attended : string;
-    total : string;
+    attended : number;
+    total : number;
     id : string;
     setOpenPopUp : Function
 }
