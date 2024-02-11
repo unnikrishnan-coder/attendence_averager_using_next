@@ -12,17 +12,15 @@ const UpdateAttendence = ({ params: { id } }: { params: { id: string } }) => {
   const [subject, setSubject] = useState<Subject | DocumentData>({id:id,attended:1,name:"Error",total:1,uid:""});
   const [openPopUp, setOpenPopUp] = useState(false);
   const [openDeletePopUp, setOpenDeletePopUp] = useState(false);
-  const [average,setAverage] = useState<string | undefined>();
+  const [average,setAverage] = useState<number | undefined>();
 
   const handleAttend = () => {
     if(!subject.attended && !subject.total) return;
-    setSubject((sub) => ({ ...sub, attended: Number(sub.attended) + 1 }));
-    setSubject((sub) => ({ ...sub, total: Number(sub.total) + 1 }));
+    setSubject((sub) => ({ ...sub, attended: sub.attended + 1 , total: sub.total + 1 }));
   };
-
   const handleAbsent = () => {
     if(!subject.attended && !subject.total) return;
-    setSubject((sub) => ({ ...sub, total: Number(sub.total) + 1 }));
+    setSubject((sub) => ({ ...sub, total: sub.total + 1 }));
   };
 
   useEffect(() => {
@@ -41,13 +39,13 @@ const UpdateAttendence = ({ params: { id } }: { params: { id: string } }) => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [id]);
 
   useEffect(()=>{
-    let val = Number(subject.attended) / Number(subject.total);
+    let val = subject.attended / subject.total;
     val = val * 100;
     let stVal = val.toFixed(2);
-    setAverage(`${stVal}%`);
+    setAverage(Number(stVal));
   },[subject])
 
   if(!subject.name){
