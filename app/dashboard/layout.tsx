@@ -1,5 +1,6 @@
 import StickySidebar from '@/components/StickySidebar/StickySidebar';
 import SideBar from '@/components/Sidebar/SideBar';
+import ErrorBoundary from './ErrorBoundary';
 
 const DashBoard = ({ children }: { children: React.ReactNode }) => {
 
@@ -8,7 +9,9 @@ const DashBoard = ({ children }: { children: React.ReactNode }) => {
       <StickySidebar />
       <SideBar />
       <div className='w-[80vw] height-screen-2rem'>
+        <ErrorBoundary>
         {children}
+        </ErrorBoundary>
       </div>
     </div>
   )
