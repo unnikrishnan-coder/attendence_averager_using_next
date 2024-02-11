@@ -2,7 +2,7 @@
 import FallBackUI from '@/components/FallBackUi/FallBackUI';
 import React, { useState, useEffect } from 'react';
 
-function ErrorBoundary({ children }) {
+function ErrorBoundary({ children }:{children:React.ReactNode}) {
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
