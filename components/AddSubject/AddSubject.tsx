@@ -13,7 +13,6 @@ const AddSubject = ({ title, nameVal, attendedVal, totalVal, update, id ,setSubj
   const [total, setTotal] = useState(totalVal);
   const [loading, setLoading] = useState(false);
 
-
   const resetData = () => {
     setName("");
     setAttended("");
