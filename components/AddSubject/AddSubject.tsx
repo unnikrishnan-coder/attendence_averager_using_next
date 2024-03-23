@@ -4,6 +4,7 @@ import { hasCookie, getCookie } from "cookies-next";
 import { Subject } from "@/types";
 import {toast,ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 import { db } from "@/firebase";
 
 const AddSubject = ({ title, nameVal, attendedVal, totalVal, update, id ,setSubjects}: { title: string, nameVal: string, attendedVal: number, totalVal: number, update?: boolean, id: string ,setSubjects?:Function}) => {
@@ -19,6 +20,7 @@ const AddSubject = ({ title, nameVal, attendedVal, totalVal, update, id ,setSubj
     setTotal(0);
   }
 
+  // checks if attended hours is greater than total hours
   const validate = () : boolean=>{
     if(attended>total){
       return false
@@ -92,8 +94,8 @@ const AddSubject = ({ title, nameVal, attendedVal, totalVal, update, id ,setSubj
         })
       }
     }
-
   }
+  
   return (
     <>
       <div className="flex flex-col glass-div-front mt-4 max-sm:mt-0 mb-4 mr-4 ml-0 max-sm:h-full max-sm:w-full">
@@ -108,7 +110,7 @@ const AddSubject = ({ title, nameVal, attendedVal, totalVal, update, id ,setSubj
           <button type="submit" className='rounded text-white glass-div-front p-3 disabled:cursor-not-allowed' disabled={loading} >{loading ? "Loading..." : "Submit"}</button>
         </form>
       </div>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </>
   )
 }
