@@ -124,9 +124,9 @@ export const TableComponent = ({ tableData,setSyncOn,setSubjects }: {tableData:s
             return ;
         }
         const uid = getCookie("user_id");
-        const documentDatas : {name:string;attended:string;total:string;uid:CookieValueTypes}[] = [];
+        const documentDatas : {name:string;attended:number;total:number;uid:CookieValueTypes}[] = [];
         tableData.forEach((val)=>{
-            const singleDoc = {name:val[1],attended:val[2],total:val[3],uid:uid};
+            const singleDoc = {name:val[1],attended:Number(val[2]),total:Number(val[3]),uid:uid};
             documentDatas.push(singleDoc);
         });
         const batch = writeBatch(db);
