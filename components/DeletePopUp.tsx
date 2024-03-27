@@ -1,18 +1,45 @@
 import { deleteDoc, doc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { db } from "@/firebase";
+import { usePathname } from 'next/navigation'
+import { Subject } from "@/types";
+import { toast } from "react-toastify";
 
-const DeletePopUp = ({id,setPopup}:{id:string,setPopup:Function}) => {
-    const {push} = useRouter();
+const DeletePopUp = ({id,setPopup,setSubjects}:{id:string,setPopup:Function,setSubjects?:Function}) => {
+    const {push,refresh} = useRouter();
+    const pathname = usePathname();
     const [loading,setLoading] = useState(false);
     function deleteCourse(): void {
+        if(id===""){
+          toast("Something went wrong",{
+            type:"error",
+            position:"top-right"
+          });
+          return;
+        }
         setLoading(true);
         deleteDoc(doc(db,"subjects",id)).then((res)=>{
             setLoading(false);
-            push("/dashboard");
+            setPopup((val:boolean)=>!val);
+            toast("Subject deleted successfully",{
+              type:"success",
+              position:"top-right"
+            })
+            if(pathname!=="/dashboard"){
+              push("/dashboard");
+            }else{
+              if(setSubjects){
+                setSubjects((val:Array<Subject>)=>{return val.filter((value,index)=>{
+                  return value.id!==id
+                })})
+              }
+            }
         }).catch((err)=>{
-            console.log(err);
+          toast("Something went wrong",{
+            type:"error",
+            position:"top-right"
+          })
             setPopup((val:boolean)=>!val)
         })
     }
